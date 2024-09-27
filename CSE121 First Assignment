@@ -1,0 +1,9 @@
+public class Introduction {
+    public static void main(String[] args) {
+        System.out.println("I am a freshman.");
+        System.out.println("My major is engineering undeclared");
+        System.out.println("My hometown is in HangZhou, China");
+        System.out.println("My favoriate color is blue , my favoriate book is \\ \"The Hobbit\" \\ and my favoriate singer is The Weeknd.");
+        System.out.println("My hobbies are running and playing vedio games.");
+    }
+}
