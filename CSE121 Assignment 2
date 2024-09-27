@@ -1,0 +1,17 @@
+public class TheBestClass {
+    public static void main(String[] args) {
+        String course = "CSE 121";
+
+        System.out.print("Welcome to ");
+        System.out.print(course);
+        System.out.println("!");
+
+        System.out.print("We want ");
+        System.out.print(course);
+        System.out.println(" to be welcoming to everyone!");
+        
+        System.out.print("We hope you enjoy your time in ");
+        System.out.print(course);
+        System.out.println(".");
+    }
+}
