@@ -1,0 +1,44 @@
+public class HelloBugs {
+    public static void main(String[] args) {
+        System.out.println("Hello Bugs! 🐞 🐝 🦗");
+        System.out.println();
+
+        System.out.println("      \\    /\\");
+        System.out.println("       )  ( ')");
+        System.out.println("      (  /  )");
+        System.out.println("       \\(__)|");
+        System.out.println("");
+        System.out.println("Look! Here is a small ant. ");
+        System.out.println("");
+
+        System.out.println("   \\     /");
+        System.out.println("    \\   / ");
+        System.out.println("     [00]  ");
+        System.out.println(" ----[   ]----");
+        System.out.println(" ----[   ]----");
+        System.out.println(" ----[   ]----");
+        System.out.println(" ----[   ]----");
+        System.out.println("Look! Spiderman is coming! ");
+        System.out.println("");
+
+        
+        System.out.println(" _|_|_|__");
+        System.out.println(" |       |\"-");
+        System.out.println(" |_______|\"-");
+        System.out.print("  | | |");
+        System.out.print("\n");
+        System.out.print("");
+        System.out.println("");
+        System.out.println("Look! A trail of ants -> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
+        System.out.print("Bzzzz");
+        System.out.println("zzzz...");
+        System.out.println("");
+        System.out.println("    \\\\  \\\\");
+        System.out.println("    _\\\\__\\\\__/");
+        System.out.print("   _| | |");
+        System.out.println(" | |/");
+        System.out.print("    |_|_|_|_|\n");
+        System.out.println();
+        System.out.println("Bye Bugs!");
+    }
+}
