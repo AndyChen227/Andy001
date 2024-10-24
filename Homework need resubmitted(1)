@@ -1,0 +1,63 @@
+//Andy Chen
+//10/23/2024
+//CSE 121
+//Ailsa
+//creative project 1
+import java.util.*;
+public class Workspace {
+    public static void main(String[] args) {
+        // Task 1; Draw a simple figure
+        System.out.println("Task 1: Look! A tiny bug is trying to find its dinner!");
+        System.out.println("      \\   /     ");
+        System.out.println(" \\    \\  /    / ");
+        System.out.println("  \\  -[00]-  /  ");
+        System.out.println("   \\[------]/   ");
+        System.out.println("    [--------]   ");
+        System.out.println("     [------]   ");
+        System.out.println("    / [--- ]\\   ");
+        System.out.println("   /  -----  \\  ");
+        System.out.println("  /           \\ ");
+        System.out.println("      💩💩💩      " );
+        System.out.println("                ");
+
+        // Task 2; Repeat your simple figure vertically
+        String[] art  = {
+                "      \\   /     ",
+                " \\    \\  /    / ",
+                "  \\  -[00]-  /  ",
+                "   \\[------]/   ",
+                "    [--------]   ",
+                "     [------]   ",
+                "    / [--- ]\\   ",
+                "   /  -----  \\  ",
+                "  /           \\ ",
+                "      💩💩💩      ",
+                "                "
+        };
+        int count = 3;
+        for (int i = 0; i < count; i++){
+            for ( int j = 0; j < art.length; j++){
+                System.out.println(art[j]);
+            }
+        System.out.println();
+        }
+
+        //Task 3；Repeat your simple figure vertically
+        for (int i = 0; i < art.length; i++) {
+            System.out.println(art[i]+art[i]+art[i]);
+        }
+
+        //Creative  option 1 : The ant army is coming!
+        int col = 3;
+        int row = 4;
+        for(int i = 0; i < row ; i++){
+            for(int j = 0; j < art.length; j++){
+                for(int k = 0; k < col; k++){
+                    System.out.print(art[j]);
+                }
+            }
+            System.out.println();
+        }
+
+    }
+}
