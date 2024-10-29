@@ -1,0 +1,90 @@
+//Andy Chen
+//Ailsa 
+//10/28/2024
+//Creative 2
+//CSE 121
+import java.util.*;
+
+public class SocialNetwork {
+    public static String network = "";
+    public static void main(String[] args) {
+        
+
+        // TODO: call your methods in main below this line
+        System.out.println("Initial Network:");
+        System.out.println(network);
+        // Adding or substracting users and view and view real time status.
+        System.out.println("Network after adding aagate and nehaa24:");
+        addUser("aagate", "sbabu23-meravf-jvdyfu-aliyam2-parakhm");
+        addUser("nehaa24","daltonbo-rkorol");
+        visualizeNetwork();
+        System.out.println("Network size: " + networkSize());
+        System.out.println();
+
+        System.out.println("Network after removing aagate:");
+        removeUser("aagate");
+        visualizeNetwork();
+        System.out.println("Network size: " + networkSize());
+        System.out.println();
+
+        System.out.println("Network after adding samkoro:");
+        addUser("samkoro", "yethanli-zachwu5-mahimu-qsun05");
+        visualizeNetwork();
+        System.out.println("Network size: " + networkSize());
+        System.out.println();
+
+        System.out.println("Network after adding ali1726:");
+        addUser("ali1726", "tan7271-deliu-hzpan8");
+        visualizeNetwork();
+        System.out.println("Network size: " + networkSize());
+        System.out.println();
+
+        System.out.println("Network after adding mxw:");
+        addUser("mxw", "");
+        visualizeNetwork();
+        System.out.println("Network size: " + networkSize());
+        System.out.println();
+
+
+
+
+    }
+
+    // TODO: Write your addUser, Network after removing aagate:
+    //Ways to adding friends
+    public static void addUser(String username, String friendList){
+        if (!network.isEmpty()) {
+            network += ",";//If there is already users in the network, adding a separator
+        }
+        network += username + ":" +friendList;
+    }
+
+    //Ways to removing friends
+    public static void removeUser(String username){
+        String[] users = network.split(",");
+        network = "";
+
+        for (String user:users){
+            if(!user.startsWith(username + ":")){
+                if(!network.isEmpty()){
+                    network += ",";
+                }
+                network += user;
+            }
+        }
+    }
+
+    //Ways to get the size of the Network
+    public static int networkSize(){
+        if (network.isEmpty()){
+            return 0;
+        }
+        return network.split(",").length;
+    }
+
+    // visualizing the network
+    public static void visualizeNetwork(){
+    System.out.println(network + ",");
+        }
+
+    }
