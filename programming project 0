@@ -1,0 +1,66 @@
+// Cornbear
+// 10/17/2024
+// CSE 121
+// Programming Assignment 0
+// TA: Ailsa
+
+public class Cornbear {
+    public static void main(String[] args) {
+
+        int espressoQuantity = 2;
+        double espressoPrice = 4.08;
+        int latteQuantity = 6;
+        double lattePrice = 6.49;
+        int chaiQuantity = 3;
+        double chaiPrice = 5.99;
+        double numberOfHours = 121.3;
+
+        double subTotal = (espressoPrice * espressoQuantity + 
+        lattePrice * latteQuantity + chaiPrice * chaiQuantity );
+        double totalItems = espressoQuantity + latteQuantity + chaiQuantity;
+        double serviceFee = subTotal / totalItems;
+        int roundedserviceFee = (int)(serviceFee + 0.5);
+        
+        double bearFee = 1.21;
+        double cornFee = subTotal % totalItems;
+        double roundedcornFee = Math.round(cornFee * 100.0) / 100.0;
+        
+        int intergerPartOfNumberOfHours = (int)
+        numberOfHours;
+        int numberOfDays = intergerPartOfNumberOfHours / 24 + 1 ;
+        int time = (int)intergerPartOfNumberOfHours % 24;
+
+
+        double total = (subTotal + roundedserviceFee + bearFee + roundedcornFee);
+        
+        
+        System.out.println("-------------------------");
+        System.out.println("      Cornbear Cafe");
+        System.out.println(" University of Washington");
+        System.out.println("        \"Seattle\"");
+        System.out.println("-------------------------");
+        System.out.println(espressoQuantity + " " + "Honey Espresso" + "   " + 
+        "$" + espressoQuantity * espressoPrice );
+        System.out.println(latteQuantity + " " + "Pandan Latte" + "     " +
+        "$" + latteQuantity * lattePrice );
+        System.out.println(chaiQuantity + " " + "Dirty Chai" + "       " + 
+        "$" + chaiQuantity * chaiPrice );
+        System.out.println("-------------------------");
+        System.out.println("Subtotal           " + "$" + subTotal);
+        System.out.println("-------------------------");
+        System.out.println("Service fee        " + "$" + roundedserviceFee);
+        System.out.println("Bear fee           " + "$" + bearFee);
+        System.out.println("Corn fee           " + "$" + roundedcornFee);
+        System.out.println("-------------------------");
+        System.out.println("Total              " + "$" + total);
+        System.out.println("-------------------------");
+        System.out.println("       Thank you <3");
+        System.out.println("      " + time + ":00" + " " +"9/" + numberOfDays +"/2024");
+      
+
+
+
+
+
+    }
+}
