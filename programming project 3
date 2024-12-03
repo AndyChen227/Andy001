@@ -1,0 +1,140 @@
+//Andy Chen
+//CSE 121
+//12/2/2024
+//Project:2DNArray sequencing
+//TA: Alisa
+//The function of this program is use a sequence composed by combination of NUCLEOTIDES with same length and find which single NUCLEOTIDE has highest frequency determinded by it's probabilities.
+import java.util.*;
+
+public class Sequencing {
+
+    public static final char[] NUCLEOTIDES = {'A', 'C', 'G', 'T'};
+
+    public static void main(String[] args) {
+        // Important note: Our tests do not test the main method output!
+        // This means that you can output whatever you would like in main to test your code.
+        // We highly encourage you to write some method calls in here to test your methods :)
+        String[] sequences = {"ACT", "CGC", "TAC", "CAT", "GAA"};
+
+        //use counts method, let the sequence stored in a 2D array
+        int[][] frequencyArray = counts(sequences);
+
+        //print the description
+        System.out.println("Position   A  C  G  T ");
+
+        //print the array one line by one line
+        for (int i = 0; i < frequencyArray.length; i++){
+        System.out.println("    " + i + "     " + Arrays.toString(frequencyArray[i]));
+        }
+        // print a space line
+        System.out.println();
+
+        //print the description
+        System.out.println("Position   A    C    G    T ");
+
+        //use probabilities method, let the probabilities stored in a 2D double array
+        double[][] probabilityArray = probabilities(frequencyArray);
+
+        //print the array one line by one line
+        for (int i = 0; i < probabilityArray.length; i++){
+        System.out.println("    " + i + "     " + Arrays.toString(probabilityArray[i]));
+        }
+
+        //print a blank line
+        System.out.println();
+
+        //Use result method to get the the key String
+        String[] key = result(probabilityArray);
+        //print the array
+        System.out.println(Arrays.toString(key));
+    }
+        
+    
+
+    // PASTE YOUR COUNTING NUCLEOTIDES DEVELOPMENT CODE HERE
+    public static int indexOfNucleotide(char nucleotide) {
+        for (int i = 0; i < NUCLEOTIDES.length; i++){
+        // If find the corresponding letters in NUCLEOTIDES sequence, return i
+        if (NUCLEOTIDES[i] == (nucleotide)){
+        return i;
+            }
+        }
+        //If can't find the corresponding letters, quit
+        return -1; // [TODO] Make sure to change this to the appropriate return value!
+    }
+
+    
+    public static int[][] counts(String[] sequences) {
+        //Create a new array, the length of row is the length of each word in sequence, col is the length of sequence.
+        int[][] frequencyArray = new int[sequences[0].length()][NUCLEOTIDES.length];
+
+        // The outer and inner loops are try to traverse all the loop. 
+        for (int i = 0; i < sequences[0].length(); i++){
+            for (int j = 0; j < sequences.length; j++){
+                //Find the each letter's position, such as "A", in the sequence.
+                int index = indexOfNucleotide(sequences[j].charAt(i));
+                if (index != -1){
+                //if index exist, add one in the exact place of the array we created
+                frequencyArray[i][index]++;
+                }
+            }
+        }
+        // [TODO] Make sure to change this to the appropriate return value!
+        return frequencyArray;
+        
+        }
+    
+
+    // THE CODE FOR THIS SLIDE GOES HERE 
+    public static double[][] probabilities(int[][] counts) {
+        // create a new 2D array
+        double[][] probabilityArray = new double[counts.length][counts[0].length];
+
+        // get the total number of sequence
+        //Assume the initial value is 0
+        int totalNumber = 0; 
+        // the totalNumber equals the length of sequence
+        for (int i = 0; i < counts[0].length; i++){
+            totalNumber += counts[0][i];
+        }
+
+        //Traverse each number in the 2D array
+        for (int i = 0; i < counts.length; i++){
+            for (int j = 0; j < counts[0].length; j++){
+                //Divided each number in the array by the length of sequence to get probability
+                probabilityArray[i][j] = (double)counts[i][j] / totalNumber;
+
+            }
+        }
+        return probabilityArray; // [TODO] Make sure to change this to the appropriate return value!
+        }
+
+
+    // THE REST OF YOUR CODE GOES HERE 
+    public static String[] result(double[][] probabilities) {
+        //Create a new String[] with the largest probabilities
+        String[] key = new String[probabilities.length];
+
+        //Traverse the array, find the greatest probabilities in each line
+        for (int i = 0; i < probabilities.length; i++){
+            
+            //set the beginning maxValue as 0
+            double maxValue = 0.0;
+
+            // use a for loop with if - else if to get the largest value in each row 
+            for (int j = 0; j < probabilities[0].length; j++){
+                if (probabilities[i][j] > maxValue){
+                    //update the maxvalue when find bigger values
+                    maxValue = probabilities[i][j];
+                    // put the nucleotide into the String
+                    key[i] = "" + NUCLEOTIDES[j];
+                } else if (probabilities[i][j] == maxValue){
+                    //If find another maximium value, added to the string. 
+                    key[i] += NUCLEOTIDES[j];
+                }
+            }
+       }
+        return key;// [TODO] Make sure to change this to the appropriate return value!
+    }
+
+}
