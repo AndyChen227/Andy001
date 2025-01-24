@@ -1,0 +1,191 @@
+// CSE 122
+// Andy Chan
+// 2025/1/20
+// Programming project 0
+// TA: Anya Vaish
+// This assignment is to build a simple stock system with some fundenmental functions.
+
+import java.util.*;
+import java.io.*;
+
+public class Stonks {
+    public static final String STOCKS_FILE_NAME = "stonks.tsv";
+
+    public static void main(String[] args) throws FileNotFoundException {
+        // TODO: write main method here
+        // Create a scanner for the file
+        Scanner fileScan = new Scanner(new File(STOCKS_FILE_NAME));
+        // Create a scanner for user output
+        Scanner console = new Scanner(System.in);
+
+        // number of shares
+        int numOfShare = Integer.parseInt(fileScan.nextLine());
+
+        // users'stock value
+        double userValue = 0;
+
+        // Create three arraies to store the basic information
+        String[] stocks = new String[numOfShare];
+        double[] prices = new double[numOfShare];
+        double[] portfolio = new double[numOfShare];
+
+        // This variable will be used to create the stock and price array
+        int index = 0;
+        
+        // Skip the first two lines
+        fileScan.nextLine();
+
+        // Across the file
+        while(fileScan.hasNextLine() && index < numOfShare) {
+            String line = fileScan.nextLine();
+            Scanner lineScan = new Scanner(line);
+
+            // Fill the array with data
+            stocks[index] = lineScan.next();
+            prices[index] = lineScan.nextDouble();
+
+            index ++;
+        }
+
+        // printing the Welcome
+        System.out.println("Welcome to the CSE 122 Stocks Simulator!");
+        System.out.println("There are " + numOfShare + " stocks on the market:");
+
+        // print the stocks with their prices
+        for (int i = 0; i < numOfShare; i++){
+            System.out.println(stocks[i] + ": " + prices[i]);
+        }
+
+        // Create the function section of Simulator
+        // Create a null value for choice
+        String choice = "";
+        // If user doesn't enter q, continuing the program
+        while (!choice.equalsIgnoreCase("q")){
+            System.out.println();
+            System.out.println("Menu: (B)uy, (Se)ll, (S)ave, (Q)uit");
+            System.out.print("Enter your choice: ");
+
+            // Assign value to this String value
+            choice = console.nextLine();
+
+            // If user enters Buy
+            if (choice.equalsIgnoreCase("B")){
+                System.out.print("Enter the stock ticker: ");
+                String name = console.nextLine();
+                System.out.print("Enter your budget: ");
+                double budget = Double.parseDouble(console.nextLine());
+
+                buyStocks(name, budget, portfolio, prices, numOfShare, stocks);
+              
+              // If user enters Se
+            } else if (choice.equalsIgnoreCase("Se")){
+                System.out.print("Enter the stock ticker: ");
+                String name = console.nextLine();
+                System.out.print("Enter the number of shares to sell: ");
+                double numSell = Double.parseDouble(console.nextLine());
+
+                sellStocks(name, numOfShare, portfolio, stocks, numSell); 
+                // if user enter S
+            } else if (choice.equalsIgnoreCase("S")){
+                System.out.print("Enter new portfolio file name: ");
+                String fileName = console.nextLine();
+
+                savePortfolio(fileName, stocks, numOfShare, portfolio);
+                // if user enter enter a wrong letter
+            } else if (!choice.equalsIgnoreCase("Q")){
+                System.out.print("Invalid choice: " + choice);
+                System.out.println();
+                System.out.print("Please try again");
+            }
+        }
+
+        // Write a method to calculate the value of users' acoount
+        for (int i = 0; i < numOfShare; i++){
+            // Add all stock's value together
+            userValue = userValue + prices[i] * portfolio[i];
+        }
+        // Exit program
+        System.out.println();
+        System.out.println("Your portfolio is currently valued at: $" + userValue);
+    }
+
+    // TODO: write your methods here
+    // method of buyStocks
+    public static void buyStocks(String name, double budget, double[] portfolio, 
+    double[] prices, int numOfShare, String[] stocks){
+        double targetPrice = 0;
+        // The user's budget need greater than 5 dollars to start the program
+        if (budget >= 5){
+            for (int i = 0; i < numOfShare; i++){
+                if (stocks[i].equals(name)){
+                    // Get the price of corresponding stocks
+                    targetPrice = prices[i];
+                }
+            }
+            System.out.println("You successfully bought " + name + ".");
+            
+
+        } else {
+            System.out.println("Budget must be at least $5");
+            // skip the rest of the code to avoid devided by 0
+            return;
+
+        }
+
+        // get the number of stocks users bought
+        double numOfStocks = budget / targetPrice;
+
+        // stored the numOfStocks to the portfolio array
+        for (int i = 0; i < numOfShare; i++){
+            if (stocks[i].equals(name)){
+                portfolio[i] = portfolio[i] + numOfStocks;
+            }
+        }
+        
+    }
+
+    // Method of sellStcol
+    public static void sellStocks(String name, int numOfShare, double[] portfolio, 
+    String[] stocks, double numSell){
+        // Examine how many stocks users owned
+        double stockExisted = 0;
+        for (int i = 0; i < numOfShare; i++){
+            if (stocks[i].equals(name)){
+                stockExisted = portfolio[i];
+            }
+        }
+
+        if (stockExisted >= numSell){
+            System.out.println("You successfully sold " + numSell + " shares of " + name + ".");
+            
+            // Update the portfolio array
+            for (int i = 0; i < numOfShare; i++){
+                if (stocks[i].equals(name)){
+                    // update the new value in the portfolio array
+                    portfolio[i] = portfolio[i] - numSell;
+                }
+            }
+    
+        } else {
+            // tell users that he/she don't have enough stcoks
+            System.out.println("You do not have enough shares of " + name + " to sell " + numSell + " shares.");
+            }
+
+
+    }
+
+    // Method to save the file
+    public static void savePortfolio(String fileName, String[] stocks, int numOfShare, double[] portfolio) 
+    throws FileNotFoundException{
+        File outFile = new File(fileName);
+        PrintStream out = new PrintStream(outFile);
+
+        // send the value from arries to this file
+        for (int i = 0; i < numOfShare; i++){
+            // Only print the line if it's not blank
+            if (portfolio[i] != 0){
+                out.println(stocks[i] + " " + portfolio[i]);
+            }
+        }
+    }
+}
