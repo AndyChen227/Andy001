@@ -1,0 +1,143 @@
+//Andy Chen
+//TA: Anya Vaish
+//1/14/2025
+//CSE 122
+//Creative project 0: Music MusicBox
+
+//Project Comment: Create a 2D array represents asong which composed by NOTES entered by users and find the most common Natural.
+
+import java.util.*;
+
+public class MusicBox {
+    public static final String NOTES = "CDEFGAB";
+    public static final String SHARP = "♯";
+    public static final String FLAT = "♭";
+    
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        String[][] song = composeSong(console);
+        System.out.println("Returned song 2D array:");
+        for (int i = 0; i < song.length; i++) {
+            for (int j = 0; j < song[0].length; j++) {
+                System.out.print(song[i][j] + " "); 
+            }
+            System.out.println();
+        }
+    }
+
+    // TODO: copy and paste the composeSong method and helper methods here
+
+    public static String[][] composeSong(Scanner console) {
+        // Use information that we collected from the helper method
+        int[] dimensions = helperMethod(console);
+        int numOfMelodies = dimensions[0];    
+        int lengthOfMelodies = dimensions[1]; 
+
+        // Create a 2D array determined by the numOfMelodies and lengthOfMelodies values
+        String[][] matrix = new String[numOfMelodies][lengthOfMelodies];
+
+        // Create a for loop allow users to enter NOTES one by one
+        for (int i = 0; i < numOfMelodies; i++) {
+            System.out.println();
+            System.out.println("Composing melody #" + (i + 1));
+            for (int j = 0; j < lengthOfMelodies; j++) {
+                System.out.print("  Enter note #" + (j + 1) + ": ");
+                // note here is the NOTES entered by users
+                String note = console.nextLine();
+                // This matrix is composed by NOTES entered by users in sequence 
+                matrix[i][j] = note;
+            }
+        }
+
+        // print a blank line
+        System.out.println();
+
+        return matrix;
+    }
+
+    // The function of this method is to get the num and length of melodies
+    public static int[] helperMethod(Scanner console) {
+        System.out.print("Enter the number of melodies: ");
+        // Use the method from tips to get these two int values
+        String numInput = console.nextLine();
+        int numOfMelodies = Integer.parseInt(numInput);
+
+        // Same process as the numOfMelodies value
+        System.out.print("Enter the length of each melody: ");
+        String lengthInput = console.nextLine();
+        int lengthOfMelodies = Integer.parseInt(lengthInput);
+
+        // return this matrix to the composeSong method
+        return new int[] {numOfMelodies, lengthOfMelodies};
+    }
+
+    // TODO: choose ONE creative extension option to implement here
+    // I will do the Option 1: mostCommonNaturals
+
+    // The mostCommonNaturals method
+    public static String[] mostCommonNaturals(String[][] songs){
+        int numOfMelodies = songs.length;
+        // Create a 2D Array which is used to represent values in int form
+        int[][] counts = new int[numOfMelodies][NOTES.length()];  
+
+        // Using formatConvert method to convert String values to int values
+        formatConvert(songs, counts);
+
+        // Using commonFinder method to get the array contains the maxIndex
+        int[] arrayOfindex= commonFinder(counts);
+
+        // Create a array includes the mostCommonNatural of each line
+        String[] result = new String[numOfMelodies];
+
+        // check each line and return the final result
+        for (int i = 0; i < numOfMelodies; i++){
+
+            // get the specific index of each line
+            int melodyIndex = arrayOfindex[i];
+
+            // get the corresponding Note of each index
+            result[i] = String.valueOf(NOTES.charAt(melodyIndex));
+            
+        }
+        return result;      
+    }
+
+    // My first helperMethod is to transfer String NOTES to int array values (Easy to compare their values)
+    public static void formatConvert(String[][] songs, int[][] counts){
+        // Use for loop to check every single notes in the matrix
+        for (int i = 0; i < songs.length; i++){
+            for (int j = 0; j < songs[i].length; j++){
+                // Only add Natural Notes to the list, ignore the NOTES with SHARP or FLAT
+                if (songs[i][j].length() == 1 && NOTES.contains(songs[i][j])){
+                    // Note here is the Natural entered by users
+                    String note = songs[i][j];
+                    // Get the index of note
+                    int noteIndex = NOTES.indexOf(note);
+                    // Add 1 to its corresponding position when we get each Notes
+                    counts[i][noteIndex]++;
+                }
+            }
+        }
+    }
+
+    // My second helperMethod is to find the mostCommonNaturals in the array
+    public static int[] commonFinder(int[][] counts){
+        // create a int[] array will be returned
+        int[] arrayOfIndex = new int[counts.length];
+
+        // traverse arraies to check each single number
+        for (int i = 0; i < counts.length; i++){
+            // Define a maxIndex, set it's initial value is 0
+            int maxIndex = 0;
+            for (int j = 0; j < counts[i].length; j++){
+                // If there are same large values, we will choose the first one
+                if (counts[i][j] > counts[i][maxIndex]){
+                    maxIndex = j;
+                }
+            }
+            //Record the mostCommonNaturals each line
+            arrayOfIndex[i] = maxIndex;
+        }
+        return arrayOfIndex;
+    }
+}
