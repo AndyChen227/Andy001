@@ -1,0 +1,156 @@
+import java.util.*;
+import java.io.*;
+
+public class MusicPlaylist {
+    // TODO: Your Code Here
+    // Pring the Welcome sentence
+    public static void main (String[] args)  {
+
+        System.out.println("Welcome to the CSE 122 Music Playlist!");
+
+        // Create a Scanner for user input
+        Scanner console = new Scanner(System.in);
+
+        // Create a initial value of
+        String choice = "";
+
+        // Create a queue to store songs entered by user
+        Queue<String> musicQueue = new LinkedList<>();
+
+        // Create a stack to display uer's listening history
+        Stack<String> musicStack = new Stack<>();
+
+        // Create a while loop repeat the process until user enters q
+        while(!choice.equalsIgnoreCase("q")){
+            // print the tips 
+            System.out.println("(A) Add song");
+            System.out.println("(P) Play song");
+            System.out.println("(Pr) Print history");
+            System.out.println("(C) Clear history");
+            System.out.println("(D) Delete from history");
+            System.out.println("(Q) Quit");
+            System.out.println();
+        
+            // Update choice entered by users
+            System.out.print("Enter your choice: ");
+            choice = console.nextLine();
+
+            // Execute different methods based on user input
+            if(choice.equalsIgnoreCase("A")){
+                addingSongs(musicQueue, console);
+            }else if(choice.equalsIgnoreCase("P")){
+                playingSongs(musicQueue, musicStack, console);
+            }else if(choice.equalsIgnoreCase("Pr")){
+                printingHistory(musicStack);
+            }else if(choice.equalsIgnoreCase("C")){
+                clearingHistory(musicStack);
+            }else if(choice.equalsIgnoreCase("D")){
+                deleteHistory(musicStack,console);
+            }else if(!choice.equalsIgnoreCase("Q")){
+            // Allowing usr enters again if they enter the wrong input
+            }
+            System.out.println();
+            System.out.println();
+        }  
+    }
+
+    // This method allow users to add the songs to the list and put the song to the bottom of the list
+    public static void addingSongs(Queue<String> musicQueue, Scanner console){
+        System.out.print("Enter song name: ");
+        // Let user enter the name of the song that he/she wants to enter
+        String songName = console.nextLine();
+        System.out.println("Successfully added " + songName);
+        // Adding the song to the bottom of the list
+        musicQueue.add(songName);
+    }
+
+    // This method helps to remove the song from the playlist and add to the history
+    public static void playingSongs(Queue<String> musicQueue, Stack<String> musicStack, Scanner console) {
+        if (musicQueue.size() == 0) {
+            // If user enters "p" when the musicQueue is empty, run the exception
+            throw new IllegalStateException("There is no songs in playlist!");
+        }
+        // Using remove method to get and move the item in the front of the list
+        String playSong = musicQueue.remove();
+        // Pring the statement
+        System.out.println("Playing song: " + playSong);
+        // Adding this song to our history stack
+        musicStack.add(playSong);
+    }
+
+    // This method is to print all the songs in the history stock
+    public static void printingHistory(Stack<String> musicStack){
+        // If the user enters "pr" when the music history is empty, print the exception
+        if (musicStack.size() == 0 ){
+            throw new IllegalStateException("There is no songs in the history list!");
+        }
+        // Print in reverse order to ensure the last input is printed first
+        for (int i = musicStack.size() -1; i >= 0; i--){
+            System.out.println("    " + musicStack.get(i));
+        }
+    }
+
+    // This method is to remove all the items from the list
+    public static void clearingHistory(Stack<String> musicStack){
+        // Use a for loop to across the Stack to remove all the items
+        // This variable is the origin size of the musicStack
+        int stackSize = musicStack.size();
+        for (int i = 0; i < stackSize; i++){
+            musicStack.pop();
+        }
+    }
+
+    // This method helps user to delete a specific number of songs from top to the bottom or bottom to the top of the list
+    public static void deleteHistory(Stack<String> musicStack, Scanner console) {
+        // Print the tips to users
+        System.out.println("A positive number will delete from recent history.");
+        System.out.println("A negative number will delete from the beginning of history.");
+        
+        // Ask user how they would like the song to be deleted
+        System.out.print("Enter number of songs to delete: ");
+        // Transfer userInputs' format from String to int
+        String userInput = console.nextLine();
+        int numIndex = Integer.parseInt(userInput);
+        // Create a variable represents the abosulte value of user's input
+        int absIndex = Math.abs(numIndex);
+        // Depending on user's inputs' abosulte value to decide whether run the IllegalStateException(Both includes negative and positive value)
+        if(absIndex > musicStack.size()){
+            throw new IllegalArgumentException("The number you entered is out of range!");
+        }
+        // Depending on the sign of the inputs to execute different methods
+        if(numIndex > 0){
+            // Execute the helpmthod to delete the songs from the list
+            deleteS(numIndex, musicStack);
+        } else if(numIndex < 0){
+            // Creating an auxiliary method helps to change the sequence of the musicStack
+            Stack<String> aux = new Stack<>();
+            // Using the helpMethod below to assign the songs from musicStack to the auxStack in reverse order and clean the musicStack
+            stoS(musicStack, aux);
+            // Using the helperMethod below to deleting the specific number of songs from the auxStack
+            deleteS(numIndex,aux);
+            // Assign the remaining songs of aux to stack, keeping the order unchanged
+            stoS(aux,musicStack);
+        } else{
+            // Don't make any change
+        }
+    }
+
+    // This helper methods' function is to move all elements of the given first stack into the given second stack
+    public static void stoS(Stack<String> stack1, Stack<String> stack2){
+        while(!stack1.isEmpty()){
+            // Add items from top of the stack1 to the bottom of stack2 and clean the stack1
+            stack2.push(stack1.pop());
+        }
+    }
+    
+    // This helper methods' function is using the pop method to remove a specific number of elements from a stack
+    public static void deleteS(int index, Stack<String> stack1){
+        // Using the absolute value of index to make sure it's can deal with negative values entered by user
+        index = Math.abs(index);
+
+        // Based on the value of index to delete values.
+        for(int i = 0; i < index; i++){
+            stack1.pop();
+        }
+    }
+}
